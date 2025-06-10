@@ -3,9 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAVARA KARTEEK - Full Stack Developer</title>
+    <title>GAVARA KARTEEK - Full Stack Developer & DevOps Engineer</title>
+    <meta name="description" content="Full Stack Developer and DevOps enthusiast specializing in Python, Django, and modern web technologies. Building scalable solutions with clean code practices.">
+    <meta name="keywords" content="Full Stack Developer, DevOps, Python, Django, Web Development, Software Engineer">
+    <meta name="author" content="Gavara Karteek">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="GAVARA KARTEEK - Full Stack Developer">
+    <meta property="og:description" content="Full Stack Developer and DevOps enthusiast building scalable web solutions">
+    <meta property="og:image" content="https://media.licdn.com/dms/image/v2/D5603AQEMkizS90nJsg/profile-displayphoto-shrink_400_400/B56ZWjtwbIGsAk-/0/1742208437701?e=1755129600&v=beta&t=d9xr53khSP4S3ohON8g5wlAH4_deIUdsmRcWQ5lyCqc">
+    <meta property="og:url" content="https://yourportfolio.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Gavara Karteek",
+        "jobTitle": "Full Stack Developer",
+        "description": "Full Stack Developer and DevOps enthusiast",
+        "url": "https://yourportfolio.com",
+        "sameAs": [
+            "https://github.com/GKARTEEK",
+            "https://www.linkedin.com/in/karteek-gavarah/"
+        ],
+        "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "KL University"
+        },
+        "knowsAbout": ["Python", "Django", "HTML", "CSS", "DevOps", "Full Stack Development"]
+    }
+    </script>
+    
     <style>
         :root {
             --primary: 139 92 246;
@@ -72,6 +108,40 @@
             padding: 0 1rem;
         }
 
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(var(--background));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgb(var(--muted));
+            border-top: 3px solid rgb(var(--primary));
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Header */
         .header {
             position: fixed;
@@ -84,9 +154,10 @@
         }
 
         .header.scrolled {
-            background: rgba(var(--background), 0.8);
+            background: rgba(var(--background), 0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgb(var(--border));
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .nav {
@@ -97,13 +168,18 @@
         }
 
         .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
+            font-size: 1.5rem;
+            font-weight: 800;
             background: linear-gradient(135deg, rgb(139, 92, 246), rgb(79, 70, 229));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .nav-links {
@@ -116,7 +192,23 @@
             text-decoration: none;
             color: rgb(var(--foreground));
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(135deg, rgb(139, 92, 246), rgb(79, 70, 229));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
@@ -130,11 +222,13 @@
             cursor: pointer;
             padding: 0.5rem;
             border-radius: var(--radius);
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
         }
 
         .theme-toggle:hover {
             background: rgb(var(--muted));
+            transform: scale(1.1);
         }
 
         .mobile-menu-btn {
@@ -146,6 +240,37 @@
             padding: 0.5rem;
         }
 
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgb(139, 92, 246), rgb(79, 70, 229));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -153,6 +278,19 @@
             align-items: center;
             background: linear-gradient(135deg, rgb(248, 250, 252), rgb(241, 245, 249));
             padding: 6rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23000" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
         }
 
         [data-theme="dark"] .hero {
@@ -164,6 +302,8 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-text h1 {
@@ -208,32 +348,52 @@
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: rgb(var(--primary));
+            background: linear-gradient(135deg, rgb(139, 92, 246), rgb(79, 70, 229));
             color: rgb(var(--primary-foreground));
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
         }
 
         .btn-primary:hover {
-            background: rgb(124, 58, 237);
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
         }
 
         .btn-outline {
             background: transparent;
             color: rgb(var(--foreground));
-            border: 1px solid rgb(var(--border));
+            border: 2px solid rgb(var(--border));
         }
 
         .btn-outline:hover {
             background: rgb(var(--muted));
             transform: translateY(-2px);
+            border-color: rgb(139, 92, 246);
         }
 
         .hero-image {
             display: flex;
             justify-content: center;
+            position: relative;
         }
 
         .profile-image {
@@ -242,12 +402,29 @@
             border-radius: 50%;
             border: 4px solid rgb(139, 92, 246, 0.3);
             object-fit: cover;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Typing Animation */
+        .typing-animation {
+            border-right: 2px solid rgb(139, 92, 246);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: rgb(139, 92, 246); }
+            51%, 100% { border-color: transparent; }
         }
 
         /* Section Styles */
         .section {
-            padding: 4rem 0;
+            padding: 5rem 0;
         }
 
         .section-alt {
@@ -256,13 +433,14 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         .section-title {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
+            position: relative;
         }
 
         .section-divider {
@@ -288,6 +466,7 @@
         .about-text p {
             margin-bottom: 1rem;
             color: rgb(var(--muted-foreground));
+            text-align: justify;
         }
 
         .about-text p:first-child {
@@ -306,12 +485,25 @@
             border-radius: var(--radius);
             padding: 1.5rem;
             text-align: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, rgb(139, 92, 246), rgb(79, 70, 229));
         }
 
         .stat-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .stat-value {
@@ -326,7 +518,7 @@
             color: rgb(var(--muted-foreground));
         }
 
-        /* Education Section - New Card Style */
+        /* Education Section - Enhanced */
         .education-container {
             max-width: 1000px;
             margin: 0 auto;
@@ -343,7 +535,7 @@
             border: 1px solid rgb(var(--border));
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -361,7 +553,7 @@
 
         .education-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
         }
 
         .education-header {
@@ -434,32 +626,6 @@
             color: rgb(var(--foreground));
         }
 
-        .education-links {
-            margin-top: 1.5rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .education-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: 1px solid rgb(var(--border));
-            border-radius: var(--radius);
-            color: rgb(var(--foreground));
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .education-link:hover {
-            background: rgb(var(--muted));
-            transform: translateY(-2px);
-        }
-
         /* Languages Section - Programming Languages */
         .languages-container {
             max-width: 1000px;
@@ -477,12 +643,13 @@
             border: 1px solid rgb(var(--border));
             border-radius: var(--radius);
             padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
         .language-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .language-header {
@@ -560,12 +727,13 @@
             border: 1px solid rgb(var(--border));
             border-radius: var(--radius);
             padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
         .skill-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .skill-category {
@@ -605,7 +773,7 @@
             border: 1px solid rgb(var(--border));
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -625,7 +793,7 @@
 
         .project-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
         }
 
         .project-header {
@@ -696,7 +864,7 @@
             border: 1px solid rgb(var(--border));
             border-radius: var(--radius);
             padding: 2rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             max-width: 800px;
             margin: 0 auto;
         }
@@ -838,6 +1006,10 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Animations */
@@ -914,14 +1086,28 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* Performance optimizations */
+        .will-change-transform {
+            will-change: transform;
+        }
+
+        .will-change-opacity {
+            will-change: opacity;
+        }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loader"></div>
+    </div>
+
     <!-- Header -->
     <header class="header" id="header">
         <div class="container">
             <nav class="nav">
-                <a href="#" class="logo">Portfolio</a>
+                <a href="#" class="logo">KARTEEK</a>
                 <ul class="nav-links">
                     <li><a href="#about">About</a></li>
                     <li><a href="#education">Education</a></li>
@@ -931,10 +1117,10 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <button class="theme-toggle" id="theme-toggle">
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
                         <i class="fas fa-sun" id="theme-icon"></i>
                     </button>
-                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
@@ -942,10 +1128,15 @@
         </div>
     </header>
 
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- Mobile Menu -->
     <div class="mobile-overlay" id="mobile-overlay"></div>
     <div class="mobile-menu" id="mobile-menu">
-        <button class="mobile-menu-close" id="mobile-menu-close">
+        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">
             <i class="fas fa-times"></i>
         </button>
         <ul class="mobile-nav-links">
@@ -959,81 +1150,81 @@
     </div>
 
     <!-- Hero Section -->
-<section class="hero">
-    <div class="container">
-        <div class="hero-content fade-in">
-            <div class="hero-text">
-                <h1>GAVARA KARTEEK</h1>
-                <h2>Full Stack Developer & DevOps Enthusiast</h2>
-                <p>Building robust, scalable solutions with modern web technologies and innovative problem-solving approaches.</p>
-                <div class="hero-buttons">
-                    <a href="https://drive.google.com/file/d/1a5did5hjMXrGWRtWfbdX8xlhYl55L5EE/view?usp=sharing" class="btn btn-primary">
-                        <i class="fas fa-download"></i>
-                        Download Resume
-                    </a>
-                    <a href="https://github.com/GKARTEEK" class="btn btn-outline">
-                        <i class="fab fa-github"></i>
-                        GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/karteek-gavarah/" class="btn btn-outline">
-                        <i class="fab fa-linkedin"></i>
-                        LinkedIn
-                    </a>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <div class="hero-text">
+                    <h1>GAVARA KARTEEK</h1>
+                    <h2 class="typing-animation">Full Stack Developer & DevOps Enthusiast</h2>
+                    <p>Passionate about building robust, scalable solutions with modern web technologies. Specializing in Python, Django, and DevOps practices to create efficient development workflows.</p>
+                    <div class="hero-buttons">
+                        <a href="https://drive.google.com/file/d/1a5did5hjMXrGWRtWfbdX8xlhYl55L5EE/view?usp=sharing" 
+                           class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-download"></i>
+                            Download Resume
+                        </a>
+                        <a href="https://github.com/GKARTEEK" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                            GitHub
+                        </a>
+                        <a href="https://www.linkedin.com/in/karteek-gavarah/" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://media.licdn.com/dms/image/v2/D5603AQEMkizS90nJsg/profile-displayphoto-shrink_400_400/B56ZWjtwbIGsAk-/0/1742208437701?e=1755129600&v=beta&t=d9xr53khSP4S3ohON8g5wlAH4_deIUdsmRcWQ5lyCqc" 
+                         alt="Gavara Karteek - Full Stack Developer" class="profile-image">
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="https://media.licdn.com/dms/image/v2/D5603AQEMkizS90nJsg/profile-displayphoto-shrink_400_400/B56ZWjtwbIGsAk-/0/1742208437701?e=1755129600&v=beta&t=d9xr53khSP4S3ohON8g5wlAH4_deIUdsmRcWQ5lyCqc" alt="Developer" class="profile-image">
-            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- About Section -->
     <section id="about" class="section section-alt">
-    <div class="container">
-        <div class="section-header fade-in">
-            <h2 class="section-title">About Me</h2>
-            <div class="section-divider"></div>
-        </div>
-        <div class="about-content fade-in">
-            <div class="about-text">
-    <p>I’m a Full Stack Developer and DevOps enthusiast with a passion for building scalable, high-performance web applications.</p>
-    <p>My core skills include Python, Django, HTML, CSS, Git, and CI/CD pipelines.</p>
-    <p>I’m currently pursuing a B.Tech in Computer Science Engineering at KL University with a CGPA of 9.2.</p>
-    <p>I’ve completed 4+ real-world projects and actively participated in hackathons and technical events.</p>
-    <p>I follow clean code practices and continuously explore new tools to enhance development and deployment workflows.</p>
-    <p>My goal is to solve real-world problems through code, automation, and collaboration.</p>
-</div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">9.2</div>
-                    <div class="stat-label">CGPA / 10</div>
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">About Me</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="about-content fade-in">
+                <div class="about-text">
+                    <p>I'm a passionate Full Stack Developer and DevOps enthusiast with expertise in building scalable, high-performance web applications that solve real-world problems.</p>
+                    <p>My technical arsenal includes Python, Django, HTML, CSS, Git, and comprehensive CI/CD pipeline management. I believe in writing clean, maintainable code and following industry best practices.</p>
+                    <p>Currently pursuing B.Tech in Computer Science Engineering at KL University with a stellar CGPA of 9.23, I've successfully completed multiple real-world projects and actively participated in hackathons and technical competitions.</p>
+                    <p>I'm driven by continuous learning and innovation, constantly exploring new technologies and methodologies to enhance development efficiency and deployment workflows.</p>
+                    <p>My goal is to leverage technology for creating impactful solutions through collaborative development, automation, and strategic problem-solving.</p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">2+</div>
-                    <div class="stat-label">Years Experience</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">2+</div>
-                    <div class="stat-label">Projects Completed</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">3</div>
-                    <div class="stat-label">Hackathons Participated</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">Python, Django</div>
-                    <div class="stat-label">Core Tech Stack</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">DevOps, Git</div>
-                    <div class="stat-label">Workflow Tools</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">9.23</div>
+                        <div class="stat-label">CGPA / 10</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">4+</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Hackathons</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">Python</div>
+                        <div class="stat-label">Primary Language</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">Django</div>
+                        <div class="stat-label">Core Framework</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Education Section -->
     <section id="education" class="section">
@@ -1083,7 +1274,7 @@
                             <div class="education-date-badge">2020 - 2022</div>
                         </div>
                         <h3 class="education-degree">Intermediate (10+2)</h3>
-                        <p class="education-school">Carmel Junior College,Kallata</p>
+                        <p class="education-school">Carmel Junior College, Kallata</p>
                         <div class="education-details">
                             <div class="education-detail">
                                 <div class="education-detail-label">Percentage</div>
@@ -1097,6 +1288,10 @@
                                 <div class="education-detail-label">Board</div>
                                 <div class="education-detail-value">State Board</div>
                             </div>
+                            <div class="education-detail">
+                                <div class="education-detail-label">Achievement</div>
+                                <div class="education-detail-value">Merit Student</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1108,7 +1303,7 @@
     <section id="languages" class="section section-alt">
         <div class="container">
             <div class="section-header fade-in">
-                <h2 class="section-title">Programming Languages</h2>
+                <h2 class="section-title">Programming Languages & Technologies</h2>
                 <div class="section-divider"></div>
             </div>
             <div class="languages-container fade-in">
@@ -1140,7 +1335,7 @@
                                 <i class="fab fa-html5"></i>
                             </div>
                             <div>
-                                <h3 class="language-name">HTML</h3>
+                                <h3 class="language-name">HTML5</h3>
                                 <p class="language-level">Expert Proficiency</p>
                             </div>
                         </div>
@@ -1161,7 +1356,7 @@
                                 <i class="fab fa-css3-alt"></i>
                             </div>
                             <div>
-                                <h3 class="language-name">CSS</h3>
+                                <h3 class="language-name">CSS3</h3>
                                 <p class="language-level">Advanced Proficiency</p>
                             </div>
                         </div>
@@ -1217,6 +1412,27 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="language-card">
+                        <div class="language-header">
+                            <div class="language-icon">
+                                <i class="fab fa-git-alt"></i>
+                            </div>
+                            <div>
+                                <h3 class="language-name">Git & GitHub</h3>
+                                <p class="language-level">Advanced Proficiency</p>
+                            </div>
+                        </div>
+                        <div class="language-proficiency">
+                            <div class="proficiency-label">
+                                <span>Proficiency</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-width="85"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1231,10 +1447,41 @@
             </div>
             <div class="skills-grid fade-in">
                 <div class="skill-card">
-                    <h3 class="skill-category">Frontend</h3>
+                    <h3 class="skill-category">Frontend Development</h3>
                     <div class="skill-item">
                         <div class="skill-header">
-                            <span class="skill-name">Html</span>
+                            <span class="skill-name">HTML5</span>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="95"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">CSS3</span>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="88"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">JavaScript</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="75"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3 class="skill-category">Backend Development</h3>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Python</span>
                             <span class="skill-percentage">90%</span>
                         </div>
                         <div class="progress-bar">
@@ -1243,21 +1490,8 @@
                     </div>
                     <div class="skill-item">
                         <div class="skill-header">
-                            <span class="skill-name">Css</span>
-                            <span class="skill-percentage">85%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="85"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-card">
-                    <h3 class="skill-category">Backend</h3>
-                    <div class="skill-item">
-                        <div class="skill-header">
                             <span class="skill-name">Django</span>
-                            <span class="skill-percentage">80%</span>
+                            <span class="skill-percentage">85%</span>
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill" data-width="85"></div>
@@ -1269,47 +1503,16 @@
                             <span class="skill-percentage">70%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-width="80"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-card">
-                    <h3 class="skill-category">DevOps</h3>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="skill-name">Docker</span>
-                            <span class="skill-percentage">80%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="80"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="skill-name">Kubernetes</span>
-                            <span class="skill-percentage">70%</span>
-                        </div>
-                        <div class="progress-bar">
                             <div class="progress-fill" data-width="70"></div>
                         </div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="skill-name">AWS</span>
-                            <span class="skill-percentage">60%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="60"></div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="skill-card">
-                    <h3 class="skill-category">Database</h3>
+                    <h3 class="skill-category">DevOps & Tools</h3>
                     <div class="skill-item">
                         <div class="skill-header">
-                            <span class="skill-name">PostgreSQL</span>
+                            <span class="skill-name">Git & GitHub</span>
                             <span class="skill-percentage">85%</span>
                         </div>
                         <div class="progress-bar">
@@ -1318,11 +1521,51 @@
                     </div>
                     <div class="skill-item">
                         <div class="skill-header">
-                            <span class="skill-name">SQLite</span>
-                            <span class="skill-percentage">80%</span>
+                            <span class="skill-name">Docker</span>
+                            <span class="skill-percentage">70%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-width="80"></div>
+                            <div class="progress-fill" data-width="70"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">CI/CD</span>
+                            <span class="skill-percentage">65%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="65"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3 class="skill-category">Database & Storage</h3>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">SQLite</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">PostgreSQL</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="75"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">MySQL</span>
+                            <span class="skill-percentage">70%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="70"></div>
                         </div>
                     </div>
                 </div>
@@ -1343,25 +1586,27 @@
                         <div class="project-icon">
                             <i class="fas fa-layer-group"></i>
                         </div>
-                        <h3 class="project-title">TechStack</h3>
+                        <h3 class="project-title">TechStack Platform</h3>
                     </div>
-                    <p class="project-description">A comprehensive technology stack management platform that helps developers organize, track, and optimize their tech stack choices for different projects. Features include technology comparison, compatibility checking, and performance analytics.</p>
+                    <p class="project-description">A comprehensive technology stack management platform designed to help developers organize, track, and optimize their technology choices for different projects. Features include technology comparison, compatibility checking, performance analytics, and team collaboration tools.</p>
                     <div class="project-tech">
-    <span class="tech-badge">SQLite</span>
-    <span class="tech-badge">Django</span>
-    <span class="tech-badge">HTML</span>
-    <span class="tech-badge">CSS</span>
-    <span class="tech-badge">Python</span>
-    <span class="tech-badge">GitHub</span>
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Django</span>
+                        <span class="tech-badge">SQLite</span>
+                        <span class="tech-badge">HTML5</span>
+                        <span class="tech-badge">CSS3</span>
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">Bootstrap</span>
+                        <span class="tech-badge">Git</span>
                     </div>
                     <div class="project-links">
-                        <a href="https://techstack-40j5.onrender.com/" class="btn btn-outline btn-sm">
+                        <a href="https://techstack-40j5.onrender.com/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">
                             <i class="fas fa-external-link-alt"></i>
                             Live Demo
                         </a>
-                        <a href="https://github.com/GKARTEEK/Techstack" class="btn btn-outline btn-sm">
+                        <a href="https://github.com/GKARTEEK/Techstack" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-github"></i>
-                            Code
+                            Source Code
                         </a>
                     </div>
                 </div>
@@ -1371,26 +1616,27 @@
                         <div class="project-icon">
                             <i class="fas fa-university"></i>
                         </div>
-                        <h3 class="project-title">Banking System</h3>
+                        <h3 class="project-title">Banking & Finance System</h3>
                     </div>
-                    <p class="project-description">A secure and scalable banking management system with features including account management, transaction processing, loan management, and real-time fraud detection. Built with enterprise-grade security and compliance standards.</p>
+                    <p class="project-description">A secure and scalable banking management system featuring comprehensive account management, transaction processing, loan management, and real-time fraud detection capabilities. Built with enterprise-grade security standards and compliance requirements in mind.</p>
                     <div class="project-tech">
-    <span class="tech-badge">Django</span>
-    <span class="tech-badge">HTML</span>
-    <span class="tech-badge">CSS</span>
-    <span class="tech-badge">Python</span>
-    <span class="tech-badge">GitHub</span>
-        <span class="tech-badge">SQLite</span>
-
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Django</span>
+                        <span class="tech-badge">SQLite</span>
+                        <span class="tech-badge">HTML5</span>
+                        <span class="tech-badge">CSS3</span>
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">Bootstrap</span>
+                        <span class="tech-badge">Git</span>
                     </div>
                     <div class="project-links">
-                        <a href="#" class="btn btn-outline btn-sm">
+                        <a href="#" class="btn btn-outline btn-sm" style="opacity: 0.6; cursor: not-allowed;">
                             <i class="fas fa-external-link-alt"></i>
-                            Live Demo
+                            Coming Soon
                         </a>
-                        <a href="https://github.com/GKARTEEK/bankingandfinance" class="btn btn-outline btn-sm">
+                        <a href="https://github.com/GKARTEEK/bankingandfinance" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-github"></i>
-                            Code
+                            Source Code
                         </a>
                     </div>
                 </div>
@@ -1408,24 +1654,34 @@
             <div class="contact-card fade-in">
                 <div class="contact-content">
                     <div class="contact-section">
-                        <h3>Contact Information</h3>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:john.doe@example.com">karteekgavara@gmail.com</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <a href="tel:+15551234567">+91 7207085626</a>
-                        </div>
-                    </div>
+    <h3 style="color: #ffffff; font-weight: bold;">Contact Information</h3>
+    <div class="contact-item">
+        <i class="fas fa-envelope" style="color: #a259ff;"></i>
+        <a href="mailto:karteekgavara@gmail.com" style="color: #8892b0; font-weight: bold;">karteekgavara@gmail.com</a>
+    </div>
+    <div class="contact-item">
+        <i class="fas fa-phone" style="color: #a259ff;"></i>
+        <a href="tel:+917207085626" style="color: #8892b0; font-weight: bold;">+91 7207085626</a>
+    </div>
+    <div class="contact-item">
+        <i class="fas fa-map-marker-alt" style="color: #a259ff;"></i>
+        <span style="color: #8892b0; font-weight: bold;">
+            Vijayawada, Andhra Pradesh, India
+        </span>
+    </div>
+</div>
+
                     <div class="contact-section">
-                        <h3>Social Media</h3>
+                        <h3>Connect With Me</h3>
                         <div class="social-links">
-                            <a href="https://github.com/GKARTEEK" class="social-btn">
+                            <a href="https://github.com/GKARTEEK" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                                 <i class="fab fa-github"></i>
                             </a>
-                            <a href="https://www.linkedin.com/in/karteek-gavarah/" class="social-btn">
+                            <a href="https://www.linkedin.com/in/karteek-gavarah/" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                                 <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="mailto:karteekgavara@gmail.com" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Email">
+                                <i class="fas fa-envelope"></i>
                             </a>
                         </div>
                     </div>
@@ -1439,18 +1695,26 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-text">
-                    © 2025 Portfolio. All rights reserved.
+                    © 2025 Gavara Karteek. All rights reserved.
                 </div>
                 <div class="footer-links">
-                    <a href="https://github.com/GKARTEEK"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/karteek-gavarah/"><i class="fab fa-linkedin"></i></a>
-                    <a href="mailto:karteekgavara@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/GKARTEEK" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/karteek-gavarah/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:karteekgavara@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 1000);
+        });
+
         // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
@@ -1484,6 +1748,23 @@
             }
         });
 
+        // Scroll to Top Button
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
         // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -1493,6 +1774,7 @@
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.add('open');
             mobileOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
         });
 
         mobileMenuClose.addEventListener('click', closeMobileMenu);
@@ -1501,6 +1783,7 @@
         function closeMobileMenu() {
             mobileMenu.classList.remove('open');
             mobileOverlay.classList.remove('open');
+            document.body.style.overflow = '';
         }
 
         // Close mobile menu when clicking on nav links
@@ -1514,9 +1797,12 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const headerHeight = document.getElementById('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
                     });
                 }
             });
@@ -1559,6 +1845,53 @@
         // Initialize progress bars to 0 width
         document.querySelectorAll('.progress-fill').forEach(bar => {
             bar.style.width = '0%';
+        });
+
+        // Typing Animation for Hero Section
+        const typingElement = document.querySelector('.typing-animation');
+        if (typingElement) {
+            const text = typingElement.textContent;
+            typingElement.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    typingElement.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            
+            setTimeout(typeWriter, 1500);
+        }
+
+        // Performance optimization: Add will-change property to animated elements
+        document.querySelectorAll('.fade-in, .progress-fill, .btn, .card').forEach(el => {
+            el.classList.add('will-change-transform');
+        });
+
+        // Remove will-change after animations complete
+        setTimeout(() => {
+            document.querySelectorAll('.will-change-transform').forEach(el => {
+                el.style.willChange = 'auto';
+            });
+        }, 3000);
+
+        // Add keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+
+        // Preload critical images
+        const criticalImages = [
+            'https://media.licdn.com/dms/image/v2/D5603AQEMkizS90nJsg/profile-displayphoto-shrink_400_400/B56ZWjtwbIGsAk-/0/1742208437701?e=1755129600&v=beta&t=d9xr53khSP4S3ohON8g5wlAH4_deIUdsmRcWQ5lyCqc'
+        ];
+
+        criticalImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
         });
     </script>
 </body>
